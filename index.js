@@ -1,52 +1,68 @@
-let pic = img.getElementsByTagName('img');
-let picTimer;
-let index = 0;
-// 创建小圆点
-makePoint();
-listenToUser();
-autoPlay();
+let n = 1;
+init();
+setInterval(() => {
+  makeLeave(getImg(n))
+    .one('transitionend', (e) => {
+      makeWait($(e.currentTarget));
+    });
+  makeCurrent(getImg(n+1));
+  n += 1;
+},3000)
 
-function listenToUser() {
-  points.addEventListener('click', function (e) {
-    for (let i = 0; i < points.children.length; i++) {
-      points.children[i].classList.remove('redPoint')
-      if (points.children[i] === e.target) {
-        index = i;
-        translatePic(index);
-        redPoint(index);
-      }
+
+
+function p(n) {
+  if(n > 4){
+    n = n % 4;
+    if(n === 0){
+      n = 4;
     }
-  }, false);
-  img.addEventListener('mouseenter', function (e) {
-    clearInterval(picTimer);
-  }, false)
-  img.addEventListener('mouseleave', function (e) {
-    setTime(1500);
-  }, false)
-}
-function autoPlay() {
-  clearInterval(picTimer);
-  setTime(1500)
-}
-function setTime(time){
-  picTimer = setInterval(function () {
-    translatePic(index);
-    for (let i = 0; i < points.children.length; i++) {
-      points.children[i].classList.remove('redPoint')
-    }
-    redPoint(index);
-    index++ && (index = index % 3);
-  }, time);
-}
-function redPoint(i){
-  points.children[i].classList.add('redPoint');
-}
-function translatePic(i) {
-  img.style.transform = `translateX(${-i * 200}px)`;
-}
-function makePoint() {
-  for (let i = 0; i < pic.length; i++) {
-    points.appendChild(document.createElement('span'));
   }
-  redPoint(0);
+  return n;
 }
+function init() {
+  $('#images > img:nth-child(1)').addClass('current').siblings().addClass('wait');
+}
+function getImg(n) {
+  return $(`#images > img:nth-child(${p(n)})`);
+}
+function makeLeave($node) {
+  $node.removeClass('current').addClass('leave');
+  return $node;
+}
+function makeCurrent($node) {
+  $node.removeClass('wait').addClass('current');
+  return $node;
+}
+function makeWait($node) {
+  $node.removeClass('leave').addClass('wait');
+  return $node;
+}
+// setTimeout(() => {
+//   $('#images > img:nth-child(1)').removeClass('current').addClass('leave')
+//     .one('transitionend', (e) => {
+//       $(e.currentTarget).removeClass('leave').addClass('wait');
+//     });
+//   $('#images > img:nth-child(2)').removeClass('wait').addClass('current');
+// }, 2000)
+// setTimeout(() => {
+//   $('#images > img:nth-child(2)').removeClass('current').addClass('leave')
+//     .one('transitionend', (e) => {
+//       $(e.currentTarget).removeClass('leave').addClass('wait');
+//     });
+//   $('#images > img:nth-child(3)').removeClass('wait').addClass('current');
+// }, 4000)
+// setTimeout(() => {
+//   $('#images > img:nth-child(3)').removeClass('current').addClass('leave')
+//     .one('transitionend', (e) => {
+//       $(e.currentTarget).removeClass('leave').addClass('wait');
+//     });
+//   $('#images > img:nth-child(4)').removeClass('wait').addClass('current');
+// }, 6000)
+// setTimeout(() => {
+//   $('#images > img:nth-child(4)').removeClass('current').addClass('leave')
+//     .one('transitionend', (e) => {
+//       $(e.currentTarget).removeClass('leave').addClass('wait');
+//     });
+//   $('#images > img:nth-child(1)').removeClass('wait').addClass('current');
+// }, 8000)

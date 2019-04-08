@@ -1,35 +1,26 @@
-.showPic {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-.showPic .imgWrapper {
-  width: 200px;
+.window {
+  width: 400px;
+  height: 300px;
+  margin: 0 auto;
   overflow: hidden;
 }
-.showPic .imgWrapper #img {
-  display: flex;
-  align-items: center;
+.window #images {
+  position: relative;
+}
+.window #images img {
+  position: absolute;
+  top: 0;
+  left: 0;
   transition: all .6s;
 }
-.showPic .imgWrapper #img img{
-  width: 200px;
+.wait {
+  transform: translateX(100%);
 }
-.showPic #points {
-  width: 200px;
-  display: flex;
-  margin-top: 30px;
-  justify-content: space-around;
+.leave {
+  transform: translateX(-100%);
+  z-index: 1;
 }
-.showPic #points .redPoint{
-  background-color: red;
-}
-.showPic #points span {
-  transition: all .6s;
-  display: block;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.1);
-  width: 12px;
-  height: 12px;
+.current {
+  transform: translateX(0);
+  z-index: 1;
 }
