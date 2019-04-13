@@ -6,21 +6,19 @@
 }
 .window #images {
   position: relative;
+  display: flex;
 }
-.window #images img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: all .6s;
+.window #images{
+  transition: all .5s;
+  transform: translateX(-400px);
 }
-.wait {
-  transform: translateX(100%);
+#btnWrapper {
+  display: flex;
+  justify-content: center;
 }
-.leave {
-  transform: translateX(-100%);
-  z-index: 1;
-}
-.current {
-  transform: translateX(0);
-  z-index: 1;
+#btnWrapper span{
+  border: 1px solid rgba(220,223,230,.8);
+  border-radius: 6px;
+  padding: 0 4px;
+  margin: 10px 5px;
 }

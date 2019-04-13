@@ -1,68 +1,58 @@
-let n = 1;
-init();
-setInterval(() => {
-  makeLeave(getImg(n))
-    .one('transitionend', (e) => {
-      makeWait($(e.currentTarget));
-    });
-  makeCurrent(getImg(n+1));
-  n += 1;
-},3000)
+let img = images.children;
+let lastIndex = 1;  // 上一个索引
+// 制作按钮
+addButton();
+// 克隆第一张和最后一张，并插入
+cloneNode();
+// 点哪个动哪个
+listenToClick();
 
 
-
-function p(n) {
-  if(n > 4){
-    n = n % 4;
-    if(n === 0){
-      n = 4;
+function listenToClick() {
+  btnWrapper.addEventListener('click', function (e) {
+    let btnLen = btnWrapper.children.length;
+    index = e.target.innerText;
+    if (!e.target.tagName === "SPAN") { return; }
+    if (lastIndex == 1 && index == btnLen) {  // 如果上一张是第一张并且当前点的是最后一张
+      to(0);  // 先滑到最左边（克隆的最后一张）
+      images.addEventListener('transitionend', function () {  // 动画结束后马上切到真的最后一张  
+        firstOrEndTo(-400 * btnLen);
+        images.removeEventListener('transitionend', arguments.callee);
+      })
+    } else if (lastIndex == btnLen && index == 1) {  // 如果上一张是最后一张并且当前点的是最后一张
+      to(-400 * (btnLen + 1));  // 先滑到最右边（克隆的第一张）
+      images.addEventListener('transitionend', function () {  // 然后动画结束后马上切到真的第一张
+        firstOrEndTo(-400)
+        images.removeEventListener('transitionend', arguments.callee);
+      })
+    } else {
+      // 正常情况
+      to(-400 * index);
     }
+    lastIndex = e.target.innerText;
+  })
+}
+function to(pos) {
+  images.style.transform = `translateX(${pos}px)`;
+}
+function cloneNode() {
+  let firstClone = img[0].cloneNode(true);
+  let lastClone = img[img.length - 1].cloneNode(true);
+  images.appendChild(firstClone);
+  images.prepend(lastClone);
+};
+function firstOrEndTo(pos) {
+  images.style.display = "none";
+  images.getBoundingClientRect();
+  images.style.transform = `translateX(${pos}px)`
+  images.style.display = "flex";
+  images.removeEventListener('transitionend', arguments.callee);
+}
+function addButton() {
+  for (let i = 1; i <= img.length; i++) {
+    let newBtn = document.createElement('span');
+    let btnNum = document.createTextNode(`${i}`);
+    newBtn.appendChild(btnNum);
+    btnWrapper.appendChild(newBtn);
   }
-  return n;
 }
-function init() {
-  $('#images > img:nth-child(1)').addClass('current').siblings().addClass('wait');
-}
-function getImg(n) {
-  return $(`#images > img:nth-child(${p(n)})`);
-}
-function makeLeave($node) {
-  $node.removeClass('current').addClass('leave');
-  return $node;
-}
-function makeCurrent($node) {
-  $node.removeClass('wait').addClass('current');
-  return $node;
-}
-function makeWait($node) {
-  $node.removeClass('leave').addClass('wait');
-  return $node;
-}
-// setTimeout(() => {
-//   $('#images > img:nth-child(1)').removeClass('current').addClass('leave')
-//     .one('transitionend', (e) => {
-//       $(e.currentTarget).removeClass('leave').addClass('wait');
-//     });
-//   $('#images > img:nth-child(2)').removeClass('wait').addClass('current');
-// }, 2000)
-// setTimeout(() => {
-//   $('#images > img:nth-child(2)').removeClass('current').addClass('leave')
-//     .one('transitionend', (e) => {
-//       $(e.currentTarget).removeClass('leave').addClass('wait');
-//     });
-//   $('#images > img:nth-child(3)').removeClass('wait').addClass('current');
-// }, 4000)
-// setTimeout(() => {
-//   $('#images > img:nth-child(3)').removeClass('current').addClass('leave')
-//     .one('transitionend', (e) => {
-//       $(e.currentTarget).removeClass('leave').addClass('wait');
-//     });
-//   $('#images > img:nth-child(4)').removeClass('wait').addClass('current');
-// }, 6000)
-// setTimeout(() => {
-//   $('#images > img:nth-child(4)').removeClass('current').addClass('leave')
-//     .one('transitionend', (e) => {
-//       $(e.currentTarget).removeClass('leave').addClass('wait');
-//     });
-//   $('#images > img:nth-child(1)').removeClass('wait').addClass('current');
-// }, 8000)
