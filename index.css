@@ -1,23 +1,54 @@
+.icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
 .window {
   width: 400px;
   height: 300px;
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
 }
+
 .window #images {
   position: relative;
   display: flex;
 }
-.window #images{
+
+.window #images {
   transition: all .5s;
   transform: translateX(-400px);
+}
+.window .control{
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: block;
+  padding: 15px 20px;
+}
+.window .control svg {
+  width: 30px;
+  height: 30px;
+}
+.window .control svg:hover {
+  cursor: pointer;
+}
+.window #previous{
+  left: 0;
+}
+.window #next{
+  right: 0;
 }
 #btnWrapper {
   display: flex;
   justify-content: center;
 }
-#btnWrapper span{
-  border: 1px solid rgba(220,223,230,.8);
+
+#btnWrapper span {
+  border: 1px solid rgba(220, 223, 230, .8);
   border-radius: 6px;
   padding: 0 4px;
   margin: 10px 5px;
