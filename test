@@ -1,0 +1,57 @@
+class Coursel {
+  constructor(root) {
+    this.$ = s => document.querySelector(s)
+    this.$$ = s => document.querySelectorAll(s)
+    this.root = root
+    this.init()
+    this.dots = Array.from(this.$$(`${this.root} .actions .dots span`))  // 转为数组，后续才可以直接查找元素的索引 
+    this.bindEvents()
+  }
+  init() {
+    // 动态生成圆点
+    this.images = Array.from(this.$$(`${this.root} .panels img`))
+    this.dotsWrapper = this.$(`${this.root} .actions .dots`)
+    for (let i = 0; i < this.images.length; i++) {
+      let span = document.createElement("span")
+      this.dotsWrapper.appendChild(span)
+    }
+    // 初始化第一张照片和圆点
+    this.$(`${this.root} .actions .dots span:nth-child(1)`).classList.add("active")
+    this.$(`${this.root} .panels img:nth-child(1)`).classList.add("active")
+  }
+  get index() {
+    return this.dots.indexOf(this.$(`${this.root} .actions .dots span.active`))
+  }
+  get preIndex() {
+    return (this.index - 1 + this.dots.length) % this.dots.length
+  }
+  get nextIndex() {
+    return (this.index + 1 + this.dots.length) % this.dots.length
+  }
+  bindEvents() {
+    this.dotsWrapper.onclick = (e) => {
+      if (e.target.tagName !== 'SPAN') return
+      let index = this.dots.indexOf(e.target)
+      this.setPanel(this.index, index)
+      this.setDot(index)
+    }
+    this.$(`${this.root} .pre`).onclick = () => {
+      this.setPanel(this.index, this.preIndex)
+      this.setDot(this.preIndex)
+    }
+    this.$(`${this.root} .next`).onclick = () => {
+      this.setPanel(this.index, this.nextIndex)
+      this.setDot(this.nextIndex)
+    }
+  }
+  setDot(index) {
+    this.dots.forEach((dot) => dot.classList.remove("active"))
+    this.dots[index].classList.add("active")
+  }
+  setPanel(fromIndex, toIndex) {
+    this.images[fromIndex].classList.remove("active")
+    this.images[toIndex].classList.add("active")
+  }
+}
+new Coursel(".carousel1")
+new Coursel(".carousel2")
