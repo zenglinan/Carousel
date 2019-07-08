@@ -40,6 +40,6 @@
 .carousel .actions .dots span.active {
   width: 12px;
 }
-#pre, #next {
+.pre, .next {
   cursor:pointer;
 }
