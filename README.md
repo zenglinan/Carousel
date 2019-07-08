@@ -1,10 +1,20 @@
-## 实现功能
-1. 上一页下一页
-2. 小圆点选择跳页
-## 要点
-1. index = (index - 1 + dots.length) % dots.length  // 圆点循环算法
-2. 查找元素在同级元素中的位置
+## 使用方法
+1. HTML
 ```
-const dots = Array.from($$(".carousel .actions .dots span"))
-let index = dots.indexOf(dot)
+<div class="carousel" id="carousel1">
+    <div class="panels">
+    <img src="xxx">
+  </div>
+  <div class="actions">
+    <span class="pre">上一页</span>
+    <div class="dots">
+    </div>
+    <span class="next">下一页</span>
+  </div>
+</div>
 ```
+2. JS
+```
+new Coursel("#carousel1")
+```
+**注：carousel作为公有类，不能通过".carousel"绑定元素**
