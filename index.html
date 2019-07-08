@@ -3,35 +3,27 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="./index.css">
-  <title>无缝轮播</title>
+  <title>Document</title>
 </head>
 
 <body>
-  <script src="//at.alicdn.com/t/font_1140859_vtvenrq8lvk.js"></script>
-  <div class="window" id="showWindow">
-    <span class="control" id="previous">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-jiantou3"></use>
-      </svg>
-    </span>
-    <span class="control" id="next">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-jiantou31"></use>
-      </svg>
-    </span>
-    <div id="images">
-      <img src="./img/1.png" alt="图片1">
-      <img src="./img/2.png" alt="">
-      <img src="./img/3.png" alt="">
-      <img src="./img/4.png" alt="">
+  <div class="carousel">
+    <div class="panels">
+      <img class="active" src="http://cdn.jirengu.com/book.jirengu.com/img/1.jpg">
+      <img src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg">
+      <img src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg">
+      <img src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg">
+    </div>
+    <div class="actions">
+      <span id="pre">上一页</span>
+      <div class="dots">
+        
+      </div>
+      <span id="next">下一页</span>
+
     </div>
   </div>
-  <div id="btnWrapper"></div>
-  <script src="./jquery-2.2.4.js"></script>
-  <script src="./index.js"></script>
+
 </body>
 
 </html>
